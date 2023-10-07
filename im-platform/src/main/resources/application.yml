@@ -1,0 +1,50 @@
+#这是配置服务的端口
+server:
+  port: 8888
+#配置项目的数据源
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/box-im?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+
+  redis:
+    host: 127.0.0.1
+    port: 16379
+    database: 1
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+mybatis-plus:
+  configuration:
+    # 是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN（下划线命名） 到经典 Java 属性名 aColumn（驼峰命名） 的类似映射
+    map-underscore-to-camel-case: false
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # mapper
+  mapper-locations:
+    # *.xml的具体路径
+    - classpath*:mapper/*.xml
+minio:
+  endpoint: http://127.0.0.1:9090 #内网地址
+  public: http://127.0.0.1:9090  #外网访问地址
+  accessKey: admin
+  secretKey: admin1234
+  bucketName: box-im
+  imagePath: image
+  filePath: file
+#  docker run -p 9000:9000 -p 9090:9090 --name minio  -e "MINIO_ROOT_USER=admin" -e "MINIO_ROOT_PASSWORD=admin1234" -v /mydata/minio/data:/data   -v /mydata/minio/config:/root/.minio   -d minio/minio server /data --console-address ":9000" --address ":9090"
+webrtc:
+  iceServers:
+    - urls: stun:stun.l.google.com:19302
+
+jwt:
+  accessToken:
+    expireIn: 1800  #半个小时
+    secret: MIIBIjANBgkq
+  refreshToken:
+    expireIn: 604800 #7天
+    secret: IKDiqVmn0VFU
